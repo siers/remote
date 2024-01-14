@@ -1,0 +1,23 @@
+#! /usr/bin/env bash
+
+nix-shell -p python3 --run 'python3 -m http.server 65353' 2>&1 |
+  grep --line-buffered -Po '(?<=GET /)[^ ]+' |
+  while read cmd; do
+    case "$cmd" in
+      space) xdotool key space ;;
+      enter) xdotool key Enter ;;
+      q) xdotool key q ;;
+      f) xdotool key f ;;
+      cl) xdotool key Control+space ;;
+
+      back) xdotool key Left ;;
+      forward) xdotool key Right ;;
+      up) xdotool key Up ;;
+      down) xdotool key Down ;;
+
+      louder) pactl set-sink-volume 0 +5% ;;
+      quieter) pactl set-sink-volume 0 -5% ;;
+      unlock) xfce4-screensaver-command -d; xset dpms force on  ;;
+      sleep) xset dpms force off ;;
+    esac
+  done
