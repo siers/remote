@@ -1,6 +1,7 @@
-#! /usr/bin/env bash
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p coreutils -p python3 -p xdotool
 
-nix-shell -p python3 --run 'python3 -m http.server 65353' 2>&1 |
+python3 -m http.server 65353 2>&1 |
   grep --line-buffered -Po '(?<=GET /)[^ ]+' |
   while read cmd; do
     case "$cmd" in
